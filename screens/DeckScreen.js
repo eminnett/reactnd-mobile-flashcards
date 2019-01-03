@@ -6,21 +6,23 @@ import {
   Text,
   View,
 } from 'react-native';
-import { WebBrowser } from 'expo';
+import { connect } from 'react-redux';
 
-export default class DeckScreen extends React.Component {
-  static navigationOptions = {
-    title: 'udacicards Deck',
+class DeckScreen extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: `${navigation.getParam('deckName')} Deck`,
+    };
   };
 
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>
-          udacicards
+          {this.props.deck.name}
         </Text>
         <Text>
-          3 cards
+          {`${this.props.deck.cardCount} cards`}
         </Text>
         <View style={styles.buttonWrapper}>
           <Button
@@ -28,24 +30,49 @@ export default class DeckScreen extends React.Component {
             onPress={this.addCard}
           />
         </View>
-        <View style={styles.buttonWrapper}>
-          <Button
-            title='Start Quiz'
-            onPress={this.startQuiz}
-          />
-        </View>
+        { this.props.deck.cardCount > 0 &&
+          <View style={styles.buttonWrapper}>
+            <Button
+              title='Start Quiz'
+              onPress={this.startQuiz}
+            />
+          </View>
+        }
       </View>
     );
   }
 
   addCard = () => {
-    this.props.navigation.navigate('NewQuestion')
+    this.props.navigation.navigate('NewQuestion', {deckId: this.props.deck.id})
   };
 
   startQuiz = () => {
-    this.props.navigation.navigate('Question')
+    this.props.navigation.navigate('Question', {cardId: this.props.firstCardId})
   };
 }
+
+function mapStateToProps(state, ownProps) {
+  const deckId = ownProps.navigation.getParam('deckId');
+  const deck = state.decks.filter(d => d.id === deckId)[0];
+  const cardsInDeck = state.cards.filter(c => c.deckId === deck.id);
+  const cardCount = cardsInDeck.length;
+  let firstCardId = null;
+  if (cardCount > 0) {
+    firstCardId = cardsInDeck.filter(c => c.position === 0)[0].id;
+  }
+
+  return {
+    navigation: ownProps.navigation,
+    deck: {
+      id: deck.id,
+      name: deck.name,
+      cardCount
+    },
+    firstCardId
+  };
+}
+
+export default connect(mapStateToProps)(DeckScreen);
 
 const styles = StyleSheet.create({
   container: {

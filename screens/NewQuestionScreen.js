@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   Button,
   Platform,
@@ -7,8 +8,18 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import { addCard } from '../actions/cards';
 
-export default class NewQuestionScreen extends React.Component {
+class NewQuestionScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      question: '',
+      answer: '',
+      position: props.position,
+    };
+  }
+
   static navigationOptions = {
     title: 'Add Card',
   };
@@ -16,8 +27,16 @@ export default class NewQuestionScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <TextInput placeholder='Question'/>
-        <TextInput placeholder='Answer'/>
+        <TextInput
+          placeholder='Question'
+          onChangeText={(value) => this.setState({question: value})}
+          value={this.state.question}
+        />
+        <TextInput
+          placeholder='Answer'
+          onChangeText={(value) => this.setState({answer: value})}
+          value={this.state.answer}
+        />
         <View style={styles.buttonWrapper}>
           <Button
             title='Submit & Back'
@@ -41,13 +60,29 @@ export default class NewQuestionScreen extends React.Component {
 
   submitAndCreateAnother = () => {
     this.submit();
-    // TODO: Clear form.
+    this.setState({question: '', answer: '', position: this.state.position + 1});
   };
 
   submit = () => {
-    // TODO: Dispatch new card action with data.
+    this.props.dispatch(
+      addCard(
+        this.props.deckId,
+        this.state.question,
+        this.state.answer,
+        this.state.position
+      )
+    );
   };
 }
+
+function mapStateToProps(state, ownProps) {
+  const deckId = ownProps.navigation.getParam('deckId');
+  const position = state.cards.filter(c => c.deckId === deckId).length;
+
+  return { deckId, position, navigation: ownProps.navigation};
+}
+
+export default connect(mapStateToProps)(NewQuestionScreen);
 
 const styles = StyleSheet.create({
   container: {
