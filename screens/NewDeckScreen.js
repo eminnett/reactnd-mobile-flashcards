@@ -19,16 +19,17 @@ class NewDeckScreen extends React.Component {
   }
 
   static navigationOptions = {
-    title: 'New Deck',
+    header: null
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>
-          What is the title of your new deck?
+        <Text style={styles.title} >
+          What is the title of this new deck?
         </Text>
         <TextInput
+          style={styles.input}
           placeholder='Deck Title'
           onChangeText={(value) => this.setState({name: value})}
           value={this.state.name}
@@ -36,6 +37,7 @@ class NewDeckScreen extends React.Component {
 
         <View style={styles.buttonWrapper}>
           <Button
+            containerViewStyle={styles.button}
             title='Create Deck'
             onPress={this.submit}
           />
@@ -46,6 +48,7 @@ class NewDeckScreen extends React.Component {
 
   submit = () => {
     this.props.dispatch(addDeckAndNavigate(this.state.name, this.props.navigation));
+    this.setState({name: ''});
   }
 }
 
@@ -54,14 +57,25 @@ export default connect()(NewDeckScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
   },
   title: {
-    fontSize: 36,
+    fontSize: 18,
+    padding: 30
+  },
+  input: {
+    height: 40,
+    width: 300,
+    backgroundColor: 'white',
+    borderColor: 'gray',
+    borderWidth: 1,
+    padding: 10
   },
   buttonWrapper: {
-    marginTop: 20,
-    width: 100
+    marginTop: 30,
+    width: 150,
+  },
+  button: {
+    alignSelf: 'stretch',
   },
 });

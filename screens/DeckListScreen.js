@@ -11,7 +11,7 @@ import DeckPreview from '../components/DeckPreview';
 
 class DeckListScreen extends React.Component {
   static navigationOptions = {
-    title: 'Decks',
+    header: null
   };
 
   render() {
@@ -45,9 +45,10 @@ export default connect(mapStateToProps)(DeckListScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
   },
   title: {
-    fontSize: 28,
+    fontSize: 24,
+    padding: 30,
+    textAlign: 'center'
   },
 });

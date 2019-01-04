@@ -12,15 +12,15 @@ export default class DeckPreview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      fadeAnim: new Animated.Value(1), // init opacity 0
+      fadeAnim: new Animated.Value(1),
     };
   }
 
   render() {
     return (
-      <TouchableOpacity style={styles.deck} onPress={this.navigateToDeck}>
+      <TouchableOpacity style={styles.deckContainer} onPress={this.navigateToDeck}>
         <Animated.View
-          style={{opacity: this.state.fadeAnim}}
+          style={{...styles.deck, opacity: this.state.fadeAnim}}
         >
           <Text style={styles.title}>
             {this.props.deck.name}
@@ -46,14 +46,17 @@ export default class DeckPreview extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  deck: {
+  deckContainer: {
     padding: 20,
+    marginBottom: 10,
+    backgroundColor: 'white',
+  },
+  deck: {
     alignItems: 'center',
-    borderBottomColor: 'blue',
-    borderBottomWidth: 3
   },
   title: {
     fontSize: 28,
+    textAlign: 'center'
   },
   subTitle: {
     fontSize: 18,

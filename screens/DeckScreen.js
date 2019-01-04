@@ -21,11 +21,12 @@ class DeckScreen extends React.Component {
         <Text style={styles.title}>
           {this.props.deck.name}
         </Text>
-        <Text>
+        <Text style={styles.subTitle}>
           {`${this.props.deck.cardCount} cards`}
         </Text>
         <View style={styles.buttonWrapper}>
           <Button
+            containerViewStyle={styles.button}
             title='Add Card'
             onPress={this.addCard}
           />
@@ -33,6 +34,7 @@ class DeckScreen extends React.Component {
         { this.props.deck.cardCount > 0 &&
           <View style={styles.buttonWrapper}>
             <Button
+              containerViewStyle={styles.button}
               title='Start Quiz'
               onPress={this.startQuiz}
             />
@@ -77,14 +79,22 @@ export default connect(mapStateToProps)(DeckScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
   },
   title: {
     fontSize: 36,
+    textAlign: 'center',
+    padding: 30,
+    paddingBottom: 15,
+  },
+  subTitle: {
+    fontSize: 18,
   },
   buttonWrapper: {
-    marginTop: 20,
-    width: 100
+    marginTop: 30,
+    width: 150,
+  },
+  button: {
+    alignSelf: 'stretch',
   },
 });

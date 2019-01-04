@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import { createStackNavigator, createMaterialTopTabNavigator } from 'react-navigation';
 import DeckListScreen from '../screens/DeckListScreen';
 import DeckScreen from '../screens/DeckScreen';
 import NewQuestionScreen from '../screens/NewQuestionScreen';
@@ -16,19 +16,41 @@ const DeckListStack = createStackNavigator({
   Results: ResultsScreen
 });
 
-DeckListStack.navigationOptions = {
-  tabBarLabel: 'Decks',
-};
-
 const NewDeckStack = createStackNavigator({
   NewDeck: NewDeckScreen,
 });
 
-NewDeckStack.navigationOptions = {
-  tabBarLabel: 'New Deck',
+DeckListStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+
+  return {
+    tabBarVisible,
+    tabBarLabel: 'Decks',
+  };
 };
 
-export default createBottomTabNavigator({
+NewDeckStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+
+  return {
+    tabBarVisible,
+    tabBarLabel: 'New Deck',
+  };
+};
+
+const tabBarOptions = {
+  style: {
+    paddingTop: 25,
+  },
+}
+
+export default createMaterialTopTabNavigator({
   DeckListStack,
   NewDeckStack
-});
+}, { tabBarOptions });

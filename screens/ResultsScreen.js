@@ -30,7 +30,7 @@ class QuestionScreen extends React.Component {
 
   render() {
     let {correct, total} = this.props;
-    let resultsMessage = `You answered ${correct} out of ${total} questions correctly. `;
+    let resultsMessage = `You answered ${correct} out of ${total} questions correctly.\n`;
 
     if (correct === total) {
       resultsMessage += 'Nicely Done!'
@@ -52,12 +52,14 @@ class QuestionScreen extends React.Component {
         <View>
           <View style={styles.buttonWrapper}>
             <Button
+              containerViewStyle={styles.button}
               title='Restart the Quiz'
               onPress={this.navigateToQuiz}
             />
           </View>
           <View style={styles.buttonWrapper}>
             <Button
+              containerViewStyle={styles.button}
               title='Back to Deck'
               onPress={this.navigateToDeck}
             />
@@ -92,7 +94,6 @@ export default connect(mapStateToProps)(QuestionScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
   },
   body: {
@@ -100,5 +101,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-  }
+    padding: 30,
+    textAlign: 'center'
+  },
+  buttonWrapper: {
+    marginTop: 30,
+    width: 150,
+  },
+  button: {
+    alignSelf: 'stretch',
+  },
 });

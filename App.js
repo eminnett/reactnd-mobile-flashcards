@@ -3,7 +3,6 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Provider } from 'react-redux';
 import AppNavigator from './navigation/AppNavigator';
 import { setLocalNotification } from './utils/notifications'
-
 import { createStore } from 'redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import reducer from './reducers';
@@ -11,11 +10,8 @@ import middleware from './middleware';
 import { persistStore, persistReducer } from 'redux-persist';
 import { AsyncStorage } from 'react-native';
 
-
-
-
 const persistConfig = {
-  key: 'b3e1b4f4-1f49-4a53-a443-3c8c47d640a9',
+  key: 'b3e1b4f4-1f49-4a53-a443-3c8c47d640a3',
   storage: AsyncStorage,
 };
 const persistedReducer = persistReducer(persistConfig, reducer);

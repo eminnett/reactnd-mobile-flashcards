@@ -27,24 +27,34 @@ class NewQuestionScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <Text style={styles.title} >
+          What is the question?
+        </Text>
         <TextInput
+          style={styles.input}
           placeholder='Question'
           onChangeText={(value) => this.setState({question: value})}
           value={this.state.question}
         />
+        <Text style={styles.title} >
+          What is the answer?
+        </Text>
         <TextInput
+          style={styles.input}
           placeholder='Answer'
           onChangeText={(value) => this.setState({answer: value})}
           value={this.state.answer}
         />
         <View style={styles.buttonWrapper}>
           <Button
+            containerViewStyle={styles.button}
             title='Submit & Back'
             onPress={this.submitAndBack}
           />
         </View>
         <View style={styles.buttonWrapper}>
           <Button
+            containerViewStyle={styles.button}
             title='Submit & Create Another'
             onPress={this.submitAndCreateAnother}
           />
@@ -87,17 +97,29 @@ export default connect(mapStateToProps)(NewQuestionScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
   },
   body: {
     alignItems: 'center',
   },
   title: {
-    fontSize: 24,
+    fontSize: 18,
+    paddingTop: 30
+  },
+  input: {
+    height: 40,
+    width: 300,
+    backgroundColor: 'white',
+    borderColor: 'gray',
+    borderWidth: 1,
+    padding: 10,
+    marginTop: 15
   },
   buttonWrapper: {
-    marginTop: 20,
-    width: 100
+    marginTop: 30,
+    width: 150,
+  },
+  button: {
+    alignSelf: 'stretch',
   },
 });

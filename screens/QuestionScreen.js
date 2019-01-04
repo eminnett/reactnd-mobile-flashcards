@@ -47,7 +47,7 @@ class QuestionScreen extends React.Component {
         {previouslyAnswered}
         <View style={styles.buttonWrapper}>
           <Button
-            title='Question'
+            title='View Question'
             onPress={this.showQuestion}
           />
         </View>
@@ -60,7 +60,7 @@ class QuestionScreen extends React.Component {
         {previouslyAnswered}
         <View style={styles.buttonWrapper}>
           <Button
-            title='Answer'
+            title='View Answer'
             onPress={this.showAnswer}
           />
         </View>
@@ -70,14 +70,15 @@ class QuestionScreen extends React.Component {
     return (
       <View style={styles.container}>
         <View>
-          <Text>
+          <Text style={styles.counter}>
             {`Question ${this.props.card.position + 1} / ${this.props.numCardsInDeck}`}
           </Text>
         </View>
         {body}
-        <View>
+        <View style={styles.answerOptions}>
           <View style={styles.buttonWrapper}>
             <Button
+              containerViewStyle={styles.button}
               title='Correct'
               color='green'
               onPress={this.answerCorrectly}
@@ -85,6 +86,7 @@ class QuestionScreen extends React.Component {
           </View>
           <View style={styles.buttonWrapper}>
             <Button
+              containerViewStyle={styles.button}
               title='Incorrect'
               color='red'
               onPress={this.answerIncorrectly}
@@ -144,23 +146,32 @@ export default connect(mapStateToProps)(QuestionScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
+  },
+  counter: {
+    padding: 10,
   },
   body: {
     alignItems: 'center',
   },
   title: {
     fontSize: 24,
+    margin: 30,
   },
   previouslyAnswered: {
-
+    width: 250,
   },
   previousAnswerMessage: {
-
+    fontSize: 18,
+  },
+  answerOptions: {
+    marginTop: 30
   },
   buttonWrapper: {
-    marginTop: 20,
-    width: 100
+    marginTop: 30,
+    width: 150,
+  },
+  button: {
+    alignSelf: 'stretch',
   },
 });
